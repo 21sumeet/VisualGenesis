@@ -3,7 +3,7 @@
 import { FC, useEffect, useState } from "react";
 
 import { MAX_FREE_COUNTS } from "@/constants";
-//import useProModal from "@/hooks/use-pro-modal";
+import useProModal from "@/hooks/use-pro-modal";
 import { Zap } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
@@ -16,7 +16,7 @@ interface FreeCounterProps {
 
 export const FreeCounter: FC<FreeCounterProps> = ({ apiLimitCount = 0, isPro = false }) => {
   const [mounted, setMounted] = useState(false);
-  //const proModal = useProModal();
+  const proModal = useProModal();
 
   useEffect(() => {
     setMounted(true);
@@ -40,9 +40,9 @@ export const FreeCounter: FC<FreeCounterProps> = ({ apiLimitCount = 0, isPro = f
             </p>
             <Progress className="h-3" value={(apiLimitCount / MAX_FREE_COUNTS) * 100} />
           </div>
-          {/* <Button variant="premium" className="w-full" onClick={proModal.onOpen}>
+          <Button  className="w-full" onClick={proModal.onOpen}>
             Upgrade <Zap className="w-4 h-4 ml-2 fill-white" />
-          </Button> */}
+          </Button>
         </CardContent>
       </Card>
     </div>

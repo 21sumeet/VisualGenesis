@@ -22,7 +22,7 @@ export const LandingNabvbar = () => {
         <div className="relative h-8 w-8 mr-4">
           <Image fill src="/logo.png" alt="Logo" />
         </div>
-        <h1 className={cn("text-2xl font-bold text-white", font.className)}>VisualGenisis</h1>
+        <h1 className={cn("text-2xl font-bold text-white", font.className)}>VisualGenesis</h1>
       </Link>
       <div className="flex items-center gap-x-2">
         <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>

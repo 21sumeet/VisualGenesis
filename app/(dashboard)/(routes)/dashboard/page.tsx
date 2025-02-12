@@ -22,6 +22,13 @@ const tools = [
 		href: "/conversation",
 	},
 	{
+		label: "Code Generation",
+		icon: Code,
+		color: "text-green-700",
+		bgColor: "bg-green-700/10",
+		href: "/code",
+	},
+	{
 		label: "Image Generation",
 		icon: ImageIcon,
 		color: "text-pink-700",
@@ -43,14 +50,6 @@ const tools = [
 		href: "/music",
 	},
 	
-	
-	{
-		label: "Code Generation",
-		icon: Code,
-		color: "text-green-700",
-		bgColor: "bg-green-700/10",
-		href: "/code",
-	},
 ];
 
 const DashboardPage = () => {
@@ -63,7 +62,7 @@ const DashboardPage = () => {
 					Explore the power of AI
 				</h2>
 				<p className="text-muted-foreground font-light text-sm md:text-lg text-center">
-					VisualGenisis is a platform that allows you to generate music, videos,
+					VisualGenesis is a platform that allows you to generate chat , image ,music, videos,
 					and code using the power of AI.
 				</p>
 			</div>

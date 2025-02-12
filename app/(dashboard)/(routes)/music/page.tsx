@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { toast } from "react-hot-toast";
 
 import { Empty } from "@/components/empty";
 import  Heading  from "@/components/heading";
@@ -17,10 +18,11 @@ import { Input } from "@/components/ui/input";
 
 
 import { formSchema } from "./constant";
+import useProModal from "@/hooks/use-pro-modal";
 
 const MusicPage = () => {
   const router = useRouter();
-  
+  const proModal = useProModal();
   const [music, setMusic] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,33 +35,32 @@ const MusicPage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("Form Values:", values); // Log form values for debugging
+    console.log("Form Values:", values); 
     
     try {
-      setMusic(""); // Reset previous music
+      setMusic(""); 
       const response = await axios.post("/api/music", {
-        prompt: values.prompt, // Send the prompt to the backend
+        prompt: values.prompt, 
       });
   
-      console.log("Response Data:", response.data); // Log the response data
+      console.log("Response Data:", response.data); 
   
       if (response?.data?.audio) {
-        setMusic(response.data.audio); // Set the audio URL
+        setMusic(response.data.audio); 
       } else {
         alert("Audio generation failed.");
       }
   
       form.reset();
     } catch (error: any) {
-      console.log("[ERROR]", error); // Log error for debugging
-      
+      console.log(error);
       if (error?.response?.status === 403) {
-        alert("Access denied. Please check your subscription.");
+        proModal.onOpen();
       } else {
-        alert("Something went wrong. Please try again.");
+        toast.error("Something went wrong.");
       }
     } finally {
-      router.refresh(); // Refresh page to reset state
+      router.refresh(); 
     }
   };
 

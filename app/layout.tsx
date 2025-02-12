@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ModalProvider } from "@/components/modal-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "VisualGenisis",
+  title: "VisualGenesis",
   description: "AI saas platform",
 };
 
@@ -29,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      ><ModalProvider />
         {children}
       </body>
     </html>
