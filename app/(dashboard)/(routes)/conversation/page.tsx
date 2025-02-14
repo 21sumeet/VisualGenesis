@@ -1,3 +1,4 @@
+// app/conversation/page.tsx
 "use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { MessageSquare } from "lucide-react";
-import { GoogleGenerativeAI } from "@google/generative-ai"; // Import Gemini SDK
 
 const formSchema = z.object({
   prompt: z.string().min(1, "Prompt cannot be empty"),
@@ -28,22 +28,16 @@ const ConversationPage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const genAI = new GoogleGenerativeAI(
-      process.env.NEXT_PUBLIC_GEMINI_API_KEY ! // Access API key from environment variable
-    );
-
     try {
       const userMessage = { role: "user", content: values.prompt };
       const newMessages = [...messages, userMessage];
 
-      // Use Gemini API for response
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-      const result = await model.generateContent(values.prompt);
+      // Call your API route
+      const response = await axios.post("/api/conversation", {
+        prompt: values.prompt,
+      });
 
-      const botMessage = {
-        role: "assistant",
-        content: result.response.text(), // Extract generated text
-      };
+      const botMessage = response.data;
 
       setMessages((current) => [...current, userMessage, botMessage]);
       form.reset();
