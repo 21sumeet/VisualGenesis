@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import axios from 'axios';
 import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs/server";
 
 export async function POST(req: Request) {
@@ -18,7 +19,8 @@ export async function POST(req: Request) {
     }
 
     const isAllowed = await checkApiLimit();
-    if (!isAllowed ) {
+    const isPro = await checkSubscription();
+    if (!isAllowed && !isPro) {
       return new NextResponse("API Limit Exceeded", { status: 403 });
     }
 
@@ -45,7 +47,9 @@ export async function POST(req: Request) {
         }
       }
     );
-    await increaseApiLimit();
+    if (!isPro) {
+      await increaseApiLimit();
+    }
 
     // Extract image URLs from response
     const imageUrls = response.data.data.map((item: any) => item.url);

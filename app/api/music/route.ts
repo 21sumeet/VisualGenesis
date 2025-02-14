@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import Replicate from "replicate";
 import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
+import { checkSubscription } from "@/lib/subscription";
 
 
 
@@ -24,7 +25,8 @@ export async function POST(req: Request) {
       return new NextResponse("Prompt is required", { status: 400 });
     }
     const isAllowed = await checkApiLimit();
-    if (!isAllowed ) {
+    const isPro = await checkSubscription();
+    if (!isAllowed && !isPro) {
       return new NextResponse("API Limit Exceeded", { status: 403 });
     }
 
@@ -39,7 +41,9 @@ export async function POST(req: Request) {
         num_inference_steps: 50
       }
     });
-    await increaseApiLimit();
+    if (!isPro) {
+      await increaseApiLimit();
+    }
 
     // Wait for the prediction to complete
     let finalPrediction = await replicate.predictions.get(prediction.id);
