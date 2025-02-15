@@ -35,7 +35,7 @@ Here's the revised README for your **Visual Genesis AI** project:
 
 ## Screenshots  
 
-![Image](https://github.com/user-attachments/assets/2f7251d3-3b71-4d35-8fed-02f3abe83d28)
+![Screenshot 2025-01-13 183345](https://github.com/user-attachments/assets/63ab177e-db42-4099-b6cd-256ecaec4072)
 ![Screenshot 2025-01-13 183420](https://github.com/user-attachments/assets/368a1654-2835-437f-9f56-2eb8f9117a45)
 ![Image](https://github.com/user-attachments/assets/6b7ac18e-d5c9-420d-9a19-1dda71a2e025)
 ![Image](https://github.com/user-attachments/assets/7151b95e-951a-45a4-aa16-6550f7622a4b)
